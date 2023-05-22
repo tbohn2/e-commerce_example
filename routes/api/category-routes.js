@@ -4,38 +4,41 @@ const { Category, Product } = require('../../models');
 // The `/api/categories` endpoint
 
 router.get('/', async (req, res) => {
-  // find all categories
-  // be sure to include its associated Products
+  // Doesn't send response until all categories are found
   try {
     const categoryData = await Category.findAll({
       include: [
-        // Products with an 's' makes this work
+        // Products with an 's' makes this work versus without 's'
         { model: Product, as: 'products' }
       ]
     });
+    // Sends categoryData back to user
     res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
+// Route to get one category
 router.get('/:id', async (req, res) => {
-  // find one category by its `id` value
-  // be sure to include its associated Products
+  // Finds a single product using `id`
   try {
+    // Doesn't send response until category is found
     const categoryData = await Category.findByPk(req.params.id, {
       include: [
         { model: Product, as: 'products' }
       ]
     });
+    // Sends categoryData back to user
     res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
+// Route to create a new category
 router.post('/', async (req, res) => {
-  // create a new category
+  // Creates a new category then returns it to the user
   try {
     const newCategory = await Category.create(req.body, {
     });
@@ -45,8 +48,9 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Route to update category
 router.put('/:id', async (req, res) => {
-  // update a category by its `id` value
+  // Updates a category by its `id` value; updates category before returning it to the user
   try {
     const updatedCategory = await Category.update(
       {
@@ -64,9 +68,10 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// Route to delete a category by its id
 router.delete('/:id', async (req, res) => {
-  // delete a category by its `id` value
   try {
+    // Waits for category to be destroyed before returning if it was successful or not
     const deletedCategory = await Category.destroy(
       {
         where: {
