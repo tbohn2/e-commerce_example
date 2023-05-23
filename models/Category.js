@@ -4,6 +4,7 @@ const sequelize = require('../config/connection.js');
 
 class Category extends Model { }
 
+// Defines the keys allowed for categories
 Category.init(
   {
     id: {
@@ -26,4 +27,5 @@ Category.init(
   }
 );
 
+// Exports Category class
 module.exports = Category;
