@@ -4,6 +4,7 @@ const sequelize = require('../config/connection.js');
 
 class Tag extends Model { }
 
+// Defines the keys allowed for Tags
 Tag.init(
   {
     id: {
@@ -26,4 +27,5 @@ Tag.init(
   }
 );
 
+// Exports Tag class
 module.exports = Tag;
